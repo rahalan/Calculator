@@ -1,6 +1,13 @@
 # Simple Calculator in PowerShell
 
-function Show-Menu {
+<#
+.SYNOPSIS
+    Displays the calculator menu options.
+.DESCRIPTION
+    Shows a formatted menu with available calculator operations including
+    addition, subtraction, multiplication, division, and exit options.
+#>
+function Show-CalculatorMenu {
     Write-Host "`n=== Simple Calculator ===" -ForegroundColor Cyan
     Write-Host "1. Addition (+)"
     Write-Host "2. Subtraction (-)"
@@ -10,7 +17,16 @@ function Show-Menu {
     Write-Host "=========================" -ForegroundColor Cyan
 }
 
-function Get-Numbers {
+<#
+.SYNOPSIS
+    Prompts the user to enter two numbers.
+.DESCRIPTION
+    Reads two numbers from user input and validates that they are valid numeric values.
+    Returns an array containing both numbers if successful, or $null if validation fails.
+.OUTPUTS
+    System.Double[] - An array containing two double values, or $null on error.
+#>
+function Get-CalculatorInput {
     $num1 = Read-Host "Enter first number"
     $num2 = Read-Host "Enter second number"
     
@@ -25,33 +41,94 @@ function Get-Numbers {
     }
 }
 
-function Add-Numbers {
-    param([double]$a, [double]$b)
-    return $a + $b
+<#
+.SYNOPSIS
+    Adds two numbers together.
+.DESCRIPTION
+    Performs addition of two double-precision floating-point numbers.
+.PARAMETER FirstNumber
+    The first number to add.
+.PARAMETER SecondNumber
+    The second number to add.
+.OUTPUTS
+    System.Double - The sum of the two numbers.
+#>
+function Invoke-Addition {
+    param(
+        [double]$FirstNumber,
+        [double]$SecondNumber
+    )
+    return $FirstNumber + $SecondNumber
 }
 
-function Subtract-Numbers {
-    param([double]$a, [double]$b)
-    return $a - $b
+<#
+.SYNOPSIS
+    Subtracts the second number from the first.
+.DESCRIPTION
+    Performs subtraction of two double-precision floating-point numbers.
+.PARAMETER FirstNumber
+    The number to subtract from (minuend).
+.PARAMETER SecondNumber
+    The number to subtract (subtrahend).
+.OUTPUTS
+    System.Double - The difference of the two numbers.
+#>
+function Invoke-Subtraction {
+    param(
+        [double]$FirstNumber,
+        [double]$SecondNumber
+    )
+    return $FirstNumber - $SecondNumber
 }
 
-function Multiply-Numbers {
-    param([double]$a, [double]$b)
-    return $a * $b
+<#
+.SYNOPSIS
+    Multiplies two numbers together.
+.DESCRIPTION
+    Performs multiplication of two double-precision floating-point numbers.
+.PARAMETER FirstNumber
+    The first number to multiply.
+.PARAMETER SecondNumber
+    The second number to multiply.
+.OUTPUTS
+    System.Double - The product of the two numbers.
+#>
+function Invoke-Multiplication {
+    param(
+        [double]$FirstNumber,
+        [double]$SecondNumber
+    )
+    return $FirstNumber * $SecondNumber
 }
 
-function Divide-Numbers {
-    param([double]$a, [double]$b)
-    if ($b -eq 0) {
+<#
+.SYNOPSIS
+    Divides the first number by the second.
+.DESCRIPTION
+    Performs division of two double-precision floating-point numbers.
+    Includes validation to prevent division by zero.
+.PARAMETER FirstNumber
+    The number to be divided (dividend).
+.PARAMETER SecondNumber
+    The number to divide by (divisor).
+.OUTPUTS
+    System.Double - The quotient of the two numbers, or $null if division by zero is attempted.
+#>
+function Invoke-Division {
+    param(
+        [double]$FirstNumber,
+        [double]$SecondNumber
+    )
+    if ($SecondNumber -eq 0) {
         Write-Host "Error: Cannot divide by zero!" -ForegroundColor Red
         return $null
     }
-    return $a / $b
+    return $FirstNumber / $SecondNumber
 }
 
-# Main loop
+# Main calculator loop
 do {
-    Show-Menu
+    Show-CalculatorMenu
     $choice = Read-Host "`nSelect an operation (1-5)"
     
     if ($choice -eq "5") {
@@ -60,7 +137,7 @@ do {
     }
     
     if ($choice -in @("1", "2", "3", "4")) {
-        $numbers = Get-Numbers
+        $numbers = Get-CalculatorInput
         
         if ($null -ne $numbers) {
             $num1 = $numbers[0]
@@ -68,19 +145,19 @@ do {
             
             switch ($choice) {
                 "1" {
-                    $result = Add-Numbers -a $num1 -b $num2
+                    $result = Invoke-Addition -FirstNumber $num1 -SecondNumber $num2
                     Write-Host "`nResult: $num1 + $num2 = $result" -ForegroundColor Green
                 }
                 "2" {
-                    $result = Subtract-Numbers -a $num1 -b $num2
+                    $result = Invoke-Subtraction -FirstNumber $num1 -SecondNumber $num2
                     Write-Host "`nResult: $num1 - $num2 = $result" -ForegroundColor Green
                 }
                 "3" {
-                    $result = Multiply-Numbers -a $num1 -b $num2
+                    $result = Invoke-Multiplication -FirstNumber $num1 -SecondNumber $num2
                     Write-Host "`nResult: $num1 * $num2 = $result" -ForegroundColor Green
                 }
                 "4" {
-                    $result = Divide-Numbers -a $num1 -b $num2
+                    $result = Invoke-Division -FirstNumber $num1 -SecondNumber $num2
                     if ($null -ne $result) {
                         Write-Host "`nResult: $num1 / $num2 = $result" -ForegroundColor Green
                     }
