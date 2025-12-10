@@ -1,0 +1,22 @@
+Operation,FirstNumber,SecondNumber,ExpectedResult,TestDescription
+Addition,5,3,8,Should add two positive numbers correctly
+Addition,-5,-3,-8,Should add two negative numbers correctly
+Addition,10,-4,6,Should add a positive and negative number correctly
+Addition,0,0,0,Should return zero when adding zero to zero
+Addition,2.5,3.7,6.2,Should handle decimal numbers correctly
+Subtraction,10,4,6,Should subtract two positive numbers correctly
+Subtraction,5,10,-5,Should subtract a larger number from a smaller number
+Subtraction,-5,-3,-2,Should subtract negative numbers correctly
+Subtraction,7,7,0,Should return zero when subtracting a number from itself
+Subtraction,5.5,2.3,3.2,Should handle decimal numbers correctly
+Multiplication,6,7,42,Should multiply two positive numbers correctly
+Multiplication,5,-3,-15,Should multiply a positive and negative number correctly
+Multiplication,-4,-5,20,Should multiply two negative numbers to get a positive result
+Multiplication,100,0,0,Should return zero when multiplying by zero
+Multiplication,2.5,4,10,Should handle decimal numbers correctly
+Division,20,4,5,Should divide two positive numbers correctly
+Division,-15,3,-5,Should divide a negative by a positive number correctly
+Division,-20,-4,5,Should divide two negative numbers to get a positive result
+Division,10,0,,Should return null when dividing by zero
+Division,7,2,3.5,Should handle decimal division correctly
+Division,0,5,0,Should return zero when dividing zero by a number
